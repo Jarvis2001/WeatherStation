@@ -127,11 +127,11 @@ pytest tests/
 
 ## Clone + Install
 ```console
--git clone https://github.com/Jarvis2001/weather_station_ml.git
--cd weather_station_ml
--python -m venv venv
--source venv/bin/activate  # or .\venv\Scripts\activate on Windows
--pip install -r requirements.txt
+git clone https://github.com/Jarvis2001/weather_station_ml.git
+cd weather_station_ml
+python -m venv venv
+source venv/bin/activate  # or .\venv\Scripts\activate on Windows
+pip install -r requirements.txt
 ```
 
 ## Start MongoDB (if local)
