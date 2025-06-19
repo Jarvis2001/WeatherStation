@@ -22,6 +22,6 @@ def test_wind_speed_conversion():
 
 
 def test_boolean_conversion():
-    input_data = {"anamoly_detected": "True"}
+    input_data = {"anomaly_detected": "True"}
     result = clean_sensor_data(input_data)
     assert result["anomaly_detected"] is True
