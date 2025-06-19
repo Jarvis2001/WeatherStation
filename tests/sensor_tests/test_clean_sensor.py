@@ -24,3 +24,4 @@ def test_boolean_conversion():
     input_data = {"anamoly_detected": "True"}
     result = clean_sensor_data(input_data)
     assert result["anomaly_detected"] is True
+    
