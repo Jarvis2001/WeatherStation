@@ -1,6 +1,7 @@
 import pytest
 from transform.clean_sensor import clean_sensor_data
 
+
 def test_temperature_conversion():
     input_data = {"temperature_c": 25}
     result = clean_sensor_data(input_data)
