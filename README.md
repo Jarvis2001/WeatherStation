@@ -123,11 +123,11 @@ pytest tests/
 -Checks formatting with black
 
 ## Clone + Install
-git clone https://github.com/yourname/weather_station_ml.git
-cd weather_station_ml
-python -m venv venv
-source venv/bin/activate  # or .\venv\Scripts\activate on Windows
-pip install -r requirements.txt
+-git clone https://github.com/yourname/weather_station_ml.git
+-cd weather_station_ml
+-python -m venv venv
+-source venv/bin/activate  # or .\venv\Scripts\activate on Windows
+-pip install -r requirements.txt
 
 ## Start MongoDB (if local)
 docker run -d -p 27017:27017 --name weather_mongo mongo:6.0
