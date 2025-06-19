@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field, validator
 from typing import Optional
 from datetime import datetime
 
+
 class WeatherSensorData(BaseModel):
     temperature_k: Optional[float]
     humidity: Optional[float]
@@ -39,7 +40,8 @@ class WeatherSensorData(BaseModel):
     sensor_calibration: Optional[str]
     sensor_accuracy: Optional[str]
     sensor_precision: Optional[str]
-    @validator('timestamp', pre=True, always=True)
+
+    @validator("timestamp", pre=True, always=True)
     def parse_timestamp(cls, value):
         if isinstance(value, datetime):
             return value

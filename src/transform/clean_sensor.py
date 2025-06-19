@@ -25,15 +25,34 @@ Usage:
 """
 
 import logging
+
 logging.basicConfig(level=logging.INFO)
 from typing import Callable
 
-def c_to_k(c): return float(c) + 273.15
-def mps_to_kph(mps): return float(mps) * 3.6
-def hpa_to_pa(hpa): return float(hpa) * 100
-def parse_bool(val): return str(val).strip().lower() in ["true", "yes", "1", "good", "valid"]
-def identity(x): return str(x).strip() if x else None
-def as_float(x): return float(x) if x not in [None, ""] else None
+
+def c_to_k(c):
+    return float(c) + 273.15
+
+
+def mps_to_kph(mps):
+    return float(mps) * 3.6
+
+
+def hpa_to_pa(hpa):
+    return float(hpa) * 100
+
+
+def parse_bool(val):
+    return str(val).strip().lower() in ["true", "yes", "1", "good", "valid"]
+
+
+def identity(x):
+    return str(x).strip() if x else None
+
+
+def as_float(x):
+    return float(x) if x not in [None, ""] else None
+
 
 # Mapping: raw field -> (clean field, transformation function)
 FIELD_MAP: dict[str, tuple[str, Callable]] = {
@@ -76,24 +95,27 @@ FIELD_MAP: dict[str, tuple[str, Callable]] = {
     "sensor_precision": ("sensor_precision", identity),
 }
 
+
 def clean_sensor_data(sensor_data: dict) -> dict:
     """
     Cleans and transforms raw sensor input data.
 
     Args:
         sensor_data (dict): Raw data dictionary from a weather sensor or API.
-    
+
     Returns:
         dict: A dictionary with cleaned and normalized fields, ready for storage or ML processing.
-    
+
     Notes:
         - Fields not present in the input will be skipped.
         - If a transformation fails, the field will be set to None.
     """
-    logging.info("Cleaning sensor data: %s at %s", 
-                 sensor_data.get("sensor_id", "unknown"),
-                 sensor_data.get("timestamp", "unknown"))
-    
+    logging.info(
+        "Cleaning sensor data: %s at %s",
+        sensor_data.get("sensor_id", "unknown"),
+        sensor_data.get("timestamp", "unknown"),
+    )
+
     cleaned = {}
     for raw_field, (clean_field, transformer) in FIELD_MAP.items():
         if raw_field in sensor_data:
