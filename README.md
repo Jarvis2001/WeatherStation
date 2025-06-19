@@ -140,7 +140,7 @@ pip install -r requirements.txt
 docker run -d -p 27017:27017 --name weather_mongo mongo:6.0
 ```
 
-##Future Roadmap (Phases 2+)
+## Future Roadmap (Phases 2+)
  - Secure camera image streaming and lossless compression
 
  - Daily weather report generation (PDF/Excel)
