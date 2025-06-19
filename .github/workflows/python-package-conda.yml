@@ -40,5 +40,6 @@ jobs:
           pytest tests
 
       - name: Run test
-        run: PYTHONPATH=src pytest
+        run: |
+          PYTHONPATH=src pytest tests/
 
