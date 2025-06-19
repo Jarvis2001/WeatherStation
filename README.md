@@ -126,6 +126,7 @@ pytest tests/
 -Checks formatting with black
 
 ## Clone + Install
+
 ```console
 git clone https://github.com/Jarvis2001/weather_station_ml.git
 cd weather_station_ml
@@ -135,10 +136,12 @@ pip install -r requirements.txt
 ```
 
 ## Start MongoDB (if local)
+
 ```docker
 docker run -d -p 27017:27017 --name weather_mongo mongo:6.0
 ```
-##Future Roadmap (Phases 2+)
+## Future Roadmap (Phases 2+)
+
  - Secure camera image streaming and lossless compression
 
  - Daily weather report generation (PDF/Excel)
