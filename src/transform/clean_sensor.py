@@ -1,8 +1,10 @@
-"""
-data_cleaner.py
+"""Provides functionality to clean and transform raw sensor data.
 
-This module provides functionality to clean and transform raw sensor data 
-from an IoT-based weather station into a standardized and enriched format 
+This module ingests IoT-based weather data and standardizes it for downstream
+storage and machine learning pipelines.
+
+This module provides functionality to clean and transform raw sensor data
+from an IoT-based weather station into a standardized and enriched format
 for storage and downstream machine learning processing.
 
 Core Features:
@@ -22,6 +24,7 @@ Usage:
         "sensor_id": "WX-001"
     }
     cleaned = clean_sensor_data(raw)
+...
 """
 
 import logging
@@ -31,26 +34,32 @@ from typing import Callable
 
 
 def c_to_k(c):
+    """Convert Celsius to Kelvin."""
     return float(c) + 273.15
 
 
 def mps_to_kph(mps):
+    """Convert meters per second to kilometers per hour."""
     return float(mps) * 3.6
 
 
 def hpa_to_pa(hpa):
+    """Convert hectopascals to Pascals."""
     return float(hpa) * 100
 
 
 def parse_bool(val):
+    """Parse truthy strings into a boolean value."""
     return str(val).strip().lower() in ["true", "yes", "1", "good", "valid"]
 
 
 def identity(x):
+    """Trim and return the input string, or None if blank."""
     return str(x).strip() if x else None
 
 
 def as_float(x):
+    """Convert input to float if not empty or None, else return None."""
     return float(x) if x not in [None, ""] else None
 
 
@@ -97,8 +106,7 @@ FIELD_MAP: dict[str, tuple[str, Callable]] = {
 
 
 def clean_sensor_data(sensor_data: dict) -> dict:
-    """
-    Cleans and transforms raw sensor input data.
+    """Cleans and transforms raw sensor input data.
 
     Args:
         sensor_data (dict): Raw data dictionary from a weather sensor or API.

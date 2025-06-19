@@ -1,9 +1,14 @@
-from pydantic import BaseModel, Field, validator
-from typing import Optional
+"""Validation schema for weather sensor data records."""
+
 from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel, validator
 
 
 class WeatherSensorData(BaseModel):
+    """Schema for a single weather sensor reading and its metadata."""
+
     temperature_k: Optional[float]
     humidity: Optional[float]
     wind_speed_kph: Optional[float]
@@ -43,6 +48,7 @@ class WeatherSensorData(BaseModel):
 
     @validator("timestamp", pre=True, always=True)
     def parse_timestamp(cls, value):
+        """Ensure timestamp is parsed from ISO string if necessary."""
         if isinstance(value, datetime):
             return value
         if isinstance(value, str):

@@ -1,0 +1,48 @@
+### version information
+
+```
+pre-commit version: 2.17.0
+git --version: git version 2.34.1
+sys.version:
+    3.10.12 (main, Feb  4 2025, 14:57:36) [GCC 11.4.0]
+sys.executable: /usr/bin/python3
+os.name: posix
+sys.platform: linux
+```
+
+### error information
+
+```
+An unexpected error has occurred: CalledProcessError: command: ('/usr/bin/python3', '-mvirtualenv', '/mnt/d/Weather Station/WeatherStation/.pre-commit-cache/repopuvjejn4/py_env-python3.12', '-p', 'python3.12')
+return code: 1
+expected return code: 0
+stdout:
+    RuntimeError: failed to find interpreter for Builtin discover of python_spec='python3.12'
+    
+stderr: (none)
+```
+
+```
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/pre_commit/error_handler.py", line 70, in error_handler
+    yield
+  File "/usr/lib/python3/dist-packages/pre_commit/main.py", line 396, in main
+    return run(args.config, store, args)
+  File "/usr/lib/python3/dist-packages/pre_commit/commands/run.py", line 416, in run
+    install_hook_envs(to_install, store)
+  File "/usr/lib/python3/dist-packages/pre_commit/repository.py", line 224, in install_hook_envs
+    _hook_install(hook)
+  File "/usr/lib/python3/dist-packages/pre_commit/repository.py", line 82, in _hook_install
+    lang.install_environment(
+  File "/usr/lib/python3/dist-packages/pre_commit/languages/python.py", line 203, in install_environment
+    cmd_output_b(*venv_cmd, cwd='/')
+  File "/usr/lib/python3/dist-packages/pre_commit/util.py", line 154, in cmd_output_b
+    raise CalledProcessError(returncode, cmd, retcode, stdout_b, stderr_b)
+pre_commit.util.CalledProcessError: command: ('/usr/bin/python3', '-mvirtualenv', '/mnt/d/Weather Station/WeatherStation/.pre-commit-cache/repopuvjejn4/py_env-python3.12', '-p', 'python3.12')
+return code: 1
+expected return code: 0
+stdout:
+    RuntimeError: failed to find interpreter for Builtin discover of python_spec='python3.12'
+    
+stderr: (none)
+```

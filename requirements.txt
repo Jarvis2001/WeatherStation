@@ -4,3 +4,6 @@ flake8
 black
 isort
 python-dotenv
+pymongo
+flask
+werkzeug
