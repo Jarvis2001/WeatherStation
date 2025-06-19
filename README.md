@@ -7,7 +7,7 @@ An end-to-end, production-grade machine learning system to **collect**, **prepro
 ## 🚀 Project Goals
 
 - Build a **mini weather station** at your window
-- Continuously collect sensor and cloud image data
+- Continuously collect sensors and images of your surroundings
 - Preprocess and store data using a **secure, structured pipeline**
 - Train a machine learning model (from scratch) on this multimodal dataset
 - Deploy a **local MLOps system** for automated updates and predictions
