@@ -84,7 +84,7 @@ An end-to-end, production-grade machine learning system to **collect**, **prepro
 | Linting              | flake8, black       |
 | CI/CD                | GitHub Actions      |
 | Image Metadata       | ESP32-CAM (JPG + JSON) |
-| Optional (Future)    | Spark, Snowflake (LocalStack), Docker, Kafka |
+| Future               | Spark, Snowflake (LocalStack), Docker, Kafka |
 
 ---
 
