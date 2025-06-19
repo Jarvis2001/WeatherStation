@@ -1,6 +1,6 @@
 # 🌦️ Weather Station ML Project
 
-An end-to-end, production-grade machine learning system to **collect**, **preprocess**, **analyze**, and **predict** local weather conditions using data from IoT sensors (ESP32, Arduino) and cloud images captured from a fixed camera setup. Designed for long-term deployment with CI/CD, data pipelines, and distributed compute in later phases.
+An end-to-end, production-grade machine learning system to **collect**, **preprocess**, **analyse**, and **predict** local weather conditions using data from IoT sensors (ESP32, Arduino) and cloud images captured from a fixed camera setup. Designed for long-term deployment with CI/CD, data pipelines, and distributed computing in later phases.
 
 ---
 
@@ -90,6 +90,7 @@ An end-to-end, production-grade machine learning system to **collect**, **prepro
 
 ## 📁 Project Structure
 
+```
 weather_station_ml/
 ├── src/
 │ ├── ingestion/ # Sensor data collectors
@@ -107,14 +108,16 @@ weather_station_ml/
 ├── Dockerfile # (Optional) Container build
 ├── requirements.txt
 └── README.md
-
+```
 
 ---
 
 ## 🧪 Testing & CI
 
 Run locally:
+```
 pytest tests/
+```
 
 -CI/CD is powered by GitHub Actions, and automatically:
 
@@ -123,15 +126,18 @@ pytest tests/
 -Checks formatting with black
 
 ## Clone + Install
--git clone https://github.com/yourname/weather_station_ml.git
+```console
+-git clone https://github.com/Jarvis2001/weather_station_ml.git
 -cd weather_station_ml
 -python -m venv venv
 -source venv/bin/activate  # or .\venv\Scripts\activate on Windows
 -pip install -r requirements.txt
+```
 
 ## Start MongoDB (if local)
+```docker
 docker run -d -p 27017:27017 --name weather_mongo mongo:6.0
-
+```
 ##Future Roadmap (Phases 2+)
  - Secure camera image streaming and lossless compression
 
