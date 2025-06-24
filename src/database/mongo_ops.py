@@ -1,27 +1,27 @@
-"""MongoDB ops for storing weather sensor data and cloud image metadata."""
+"""MongoDB handler for weather sensor and image metadata."""
 
+import os
 from datetime import datetime
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://localhost:27017/")
-db = client.weather_station
 
+class WeatherDB:
+    """Handles MongoDB operations for sensor and image metadata."""
 
-def insert_sensor_data(cleaned_data: dict):
-    """Insert cleaned sensor data into MongoDB collection.
+    def __init__(self, uri=None, db_name="weather_station"):
+        """Initialize the WeatherDB client and define collections."""
+        self.uri = uri or os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+        self.client = MongoClient(self.uri)
+        self.db = self.client[db_name]
+        self.sensor_collection = self.db["sensor_data"]
+        self.image_collection = self.db["cloud_images"]
 
-    Args:
-        cleaned_data (dict): Normalized data with ISO-formatted timestamp.
-    """
-    cleaned_data["timestamp"] = datetime.fromisoformat(cleaned_data["timestamp"])
-    db.sensor_data.insert_one(cleaned_data)
+    def insert_sensor_data(self, cleaned_data: dict):
+        """Insert cleaned sensor data with ISO timestamp."""
+        cleaned_data["timestamp"] = datetime.fromisoformat(cleaned_data["timestamp"])
+        self.sensor_collection.insert_one(cleaned_data)
 
-
-def insert_cloud_image_metadata(metadata: dict):
-    """Insert cloud image metadata into the database.
-
-    Args:
-        metadata (dict): Fields describing the uploaded image.
-    """
-    db.cloud_images.insert_one(metadata)
+    def insert_cloud_image_metadata(self, metadata: dict):
+        """Insert metadata for a cloud image."""
+        self.image_collection.insert_one(metadata)
