@@ -34,3 +34,14 @@ repos:
         require_serial: true
         # disable build isolation
         install_command: python -m pip install --no-build-isolation {packages}
+  
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Run pytest suite
+        entry: pytest
+        language: system
+        pass_filenames: false
+        stages: [commit]
+
+
