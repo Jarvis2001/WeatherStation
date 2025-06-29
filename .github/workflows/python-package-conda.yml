@@ -34,3 +34,16 @@ jobs:
       - name: Run unit tests with PYTHONPATH set
         run: |
           PYTHONPATH=src pytest tests
+          
+      - name: Debug Python env
+        run: |
+          python --version
+          pip list
+          echo $PYTHONPATH
+
+          
+      - name: Debug test discovery
+        run: |
+          echo "PYTHONPATH=$PYTHONPATH"
+          pytest --collect-only
+
