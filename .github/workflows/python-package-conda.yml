@@ -9,6 +9,13 @@ on:
 jobs:
   build-test-lint:
     runs-on: ubuntu-latest
+    
+    services:
+      mongo:
+        image: mongo:6
+        ports:
+          - 27017:27017
+
 
     steps:
       - name: Checkout code
@@ -29,7 +36,7 @@ jobs:
         run: flake8 src tests
 
       - name: Check formatting with black
-        run: black --check src tests
+        run: black --check src tests      
 
       - name: Run unit tests with PYTHONPATH set
         run: |
