@@ -1,7 +1,5 @@
-default_language_version:
-  python: python3.10
-
-
+# default_language_version:
+#   python: python3.10
 repos:
   - repo: https://github.com/psf/black
     rev: 24.3.0
@@ -30,4 +28,9 @@ repos:
     rev: 6.3.0
     hooks:
       - id: pydocstyle
-        args: [--convention=google]  # or 'numpy' or 'pep257'
+        args: [--convention=google]
+        additional_dependencies: []
+        language_version: python3.10
+        require_serial: true
+        # disable build isolation
+        install_command: python -m pip install --no-build-isolation {packages}

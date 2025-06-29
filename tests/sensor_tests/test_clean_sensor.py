@@ -1,3 +1,10 @@
+"""Weather Sensor Data Cleaning Tests
+This module contains tests for the clean_sensor_data function, which processes and cleans sensor data.
+It includes tests for temperature conversion, humidity normalization, wind speed conversion,
+and boolean value normalization.
+# SPDX-License-Identifier: Apache-2.0
+"""
+
 import pytest
 
 from transform.clean_sensor import clean_sensor_data

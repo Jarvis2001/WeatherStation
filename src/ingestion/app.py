@@ -3,7 +3,11 @@
 import os
 
 from flask import Flask, jsonify, request
+from pydantic import ValidationError
 from werkzeug.utils import secure_filename
+
+from database.mongo_ops import WeatherDB, insert_sensor_data
+from validation.schemas.weather_sensor_data import WeatherSensorData
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "storage/images_raw"
@@ -13,6 +17,58 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 def log_event(event, **kwargs):
     """Log an event with optional keyword arguments (placeholder implementation)."""
     print(f"{event}: {kwargs}")
+
+
+weather_db = WeatherDB()
+
+
+def process_and_store_weather_data(payload: dict):
+    """Validate and insert weather sensor data into the database.
+
+    Parses and validates the incoming sensor data against the WeatherSensorData schema.
+    If validation succeeds, stores the cleaned record using the weather_db interface.
+    Otherwise, prints the validation errors.
+
+    Args:
+        payload (dict): Raw sensor data payload to be validated and stored.
+
+    Returns:
+        None
+    """
+    try:
+        validated = WeatherSensorData(**payload)
+        record = validated.dict(exclude_none=True)
+        weather_db.insert_sensor_data(record)
+        print("Sensor data inserted successfully.")
+    except ValidationError as e:
+        print("Validation failed:", e)
+
+
+def validate_and_store(payload: dict):
+    """Validate weather sensor data and store it in the database.
+
+    This function attempts to deserialize and validate a weather sensor
+    payload using the `WeatherSensorData` model. If validation is successful,
+    it inserts the sanitized record into the database and returns the record ID.
+    If validation fails, the error is logged and `None` is returned.
+
+    Args:
+        payload (dict): A dictionary representing the weather sensor data,
+            expected to conform to the WeatherSensorData schema.
+
+    Returns:
+        str or None: The inserted record's ID as a string if successful;
+            `None` if validation fails.
+    """
+    try:
+        validated = WeatherSensorData(**payload)
+        record = validated.dict(exclude_none=True)
+        record_id = insert_sensor_data(record)
+        print(f"Inserted with ID: {record_id}")
+        return record_id
+    except ValidationError as e:
+        print(f"Validation error: {e}")
+        return None
 
 
 def validate_upload(file, metadata):

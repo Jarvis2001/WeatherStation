@@ -3,57 +3,79 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, Field, StrictFloat, StrictStr, validator
 
 
 class WeatherSensorData(BaseModel):
     """Schema for a single weather sensor reading and its metadata."""
 
-    temperature_k: Optional[float]
-    humidity: Optional[float]
-    wind_speed_kph: Optional[float]
-    wind_direction: Optional[float]
-    pressure_pa: Optional[float]
-    dew_point_k: Optional[float]
-    heat_index_k: Optional[float]
-    timestamp: Optional[datetime]
-    sensor_id: Optional[str]
-    location: Optional[str]
-    battery_level: Optional[float]
-    signal_strength: Optional[float]
-    data_quality: Optional[bool]
-    comments: Optional[str]
-    sensor_type: Optional[str]
-    manufacturer: Optional[str]
-    model: Optional[str]
-    firmware_version: Optional[str]
-    calibration_data: Optional[str]
-    raw_data: Optional[str]
-    data_source: Optional[str]
-    upload_time: Optional[str]
-    upload_status: Optional[str]
-    processing_notes: Optional[str]
-    quality_flags: Optional[str]
-    anomaly_detected: Optional[bool]
-    anomaly_type: Optional[str]
-    anomaly_severity: Optional[str]
-    anomaly_timestamp: Optional[str]
-    anomaly_resolution: Optional[str]
-    anomaly_comments: Optional[str]
-    sensor_status: Optional[str]
-    sensor_location: Optional[str]
-    sensor_calibration: Optional[str]
-    sensor_accuracy: Optional[str]
-    sensor_precision: Optional[str]
+    temperature_k: Optional[StrictFloat] = Field(
+        None, ge=0, description="Temperature in Kelvin"
+    )
+    humidity: Optional[StrictFloat] = Field(
+        None, ge=0, le=100, description="Humidity percentage"
+    )
+    wind_speed_kph: Optional[StrictFloat] = Field(
+        None, ge=0, description="Wind speed in kilometers per hour"
+    )
+    wind_direction: Optional[StrictFloat] = Field(
+        None, ge=0, le=360, description="Wind direction in degrees"
+    )
+    pressure_pa: Optional[StrictFloat] = Field(
+        None, ge=0, description="Atmospheric pressure in Pascals"
+    )
+    dew_point_k: Optional[StrictFloat] = Field(
+        None, ge=0, description="Dew point in Kelvin"
+    )
+    heat_index_k: Optional[StrictFloat] = Field(
+        None, ge=0, description="Heat index in Kelvin"
+    )
 
-    @validator("timestamp", pre=True, always=True)
-    def parse_timestamp(cls, value):
-        """Ensure timestamp is parsed from ISO string if necessary."""
-        if isinstance(value, datetime):
+    timestamp: Optional[datetime]
+    upload_time: Optional[datetime]
+    anomaly_timestamp: Optional[datetime]
+
+    sensor_id: Optional[StrictStr]
+    location: Optional[StrictStr]
+    battery_level: Optional[StrictFloat]
+    signal_strength: Optional[StrictFloat]
+    data_quality: Optional[bool]
+
+    comments: Optional[StrictStr]
+    sensor_type: Optional[StrictStr]
+    manufacturer: Optional[StrictStr]
+    model: Optional[StrictStr]
+    firmware_version: Optional[StrictStr]
+    calibration_data: Optional[StrictStr]
+    raw_data: Optional[StrictStr]
+    data_source: Optional[StrictStr]
+
+    upload_status: Optional[StrictStr]
+    processing_notes: Optional[StrictStr]
+    quality_flags: Optional[StrictStr]
+
+    anomaly_detected: Optional[bool]
+    anomaly_type: Optional[StrictStr]
+    anomaly_severity: Optional[StrictStr]
+    anomaly_timestamp: Optional[datetime]
+    anomaly_resolution: Optional[StrictStr]
+    anomaly_comments: Optional[StrictStr]
+
+    sensor_status: Optional[StrictStr]
+    sensor_location: Optional[StrictStr]
+    sensor_calibration: Optional[StrictStr]
+    sensor_accuracy: Optional[StrictStr]
+    sensor_precision: Optional[StrictStr]
+
+    # Validators
+    @validator("timestamp", "upload_time", "anomaly_timestamp", pre=True, always=True)
+    def parse_iso_datetime(cls, value):
+        """Ensure timestamps are parsed from ISO strings if necessary."""
+        if value is None or isinstance(value, datetime):
             return value
         if isinstance(value, str):
             try:
                 return datetime.fromisoformat(value)
             except ValueError:
                 raise ValueError(f"Invalid ISO timestamp format: {value}")
-        raise TypeError(f"Invalid type for timestamp: {type(value)}")
+        raise TypeError(f"Invalid type for datetime field: {type(value)}")
