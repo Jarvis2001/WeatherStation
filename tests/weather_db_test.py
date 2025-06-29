@@ -8,9 +8,9 @@ and image metadata. It uses pytest for testing and pymongo for database interact
 """
 
 from datetime import datetime
-from json import ObjectId
 
 import pytest
+from bson import ObjectId
 
 from database.mongo_ops import WeatherDB
 
